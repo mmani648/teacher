@@ -1,0 +1,51 @@
+/* Additional styles for Python & AI Mentorship Landing Page */
+/* Primary styles are in index.html <style> block */
+
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Selection color */
+::selection {
+  background: rgba(139, 92, 246, 0.3);
+  color: #0f172a;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0f172a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+}
+
+/* Calendly widget adjustments */
+.calendly-inline-widget {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* Focus styles for accessibility */
+a:focus,
+button:focus {
+  outline: 2px solid #8b5cf6;
+  outline-offset: 2px;
+}
+
+/* Responsive improvements */
+@media (max-width: 768px) {
+  .calendly-inline-widget {
+    height: 800px !important;
+  }
+}

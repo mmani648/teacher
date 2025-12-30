@@ -1,0 +1,1451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python & AI Mentorship | Master Python & AI From Scratch</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #06b6d4;
+            --accent: #f472b6;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --shadow: 0 20px 40px -15px rgba(99, 102, 241, 0.25), 0 8px 16px -8px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 30px 60px -20px rgba(99, 102, 241, 0.3);
+            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            --gradient-primary: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%);
+            --gradient-hero: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #312e81 100%);
+            --glow: 0 0 40px rgba(139, 92, 246, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--dark);
+            background-color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Animated background particles */
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: rgba(139, 92, 246, 0.3);
+            border-radius: 50%;
+            animation: float 15s infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
+        }
+
+        .particle:nth-child(1) { left: 10%; animation-delay: 0s; animation-duration: 12s; }
+        .particle:nth-child(2) { left: 20%; animation-delay: 2s; animation-duration: 15s; }
+        .particle:nth-child(3) { left: 30%; animation-delay: 4s; animation-duration: 18s; }
+        .particle:nth-child(4) { left: 40%; animation-delay: 1s; animation-duration: 14s; }
+        .particle:nth-child(5) { left: 50%; animation-delay: 3s; animation-duration: 16s; }
+        .particle:nth-child(6) { left: 60%; animation-delay: 5s; animation-duration: 13s; }
+        .particle:nth-child(7) { left: 70%; animation-delay: 2.5s; animation-duration: 17s; }
+        .particle:nth-child(8) { left: 80%; animation-delay: 1.5s; animation-duration: 14s; }
+        .particle:nth-child(9) { left: 90%; animation-delay: 3.5s; animation-duration: 15s; }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section {
+            padding: 80px 0;
+        }
+
+        h1, h2, h3, h4 {
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            position: relative;
+            margin-bottom: 3rem;
+        }
+
+        h2:after {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 4px;
+            background: var(--gradient-primary);
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+
+        h3 {
+            font-size: 1.8rem;
+        }
+
+        p {
+            margin-bottom: 1.5rem;
+            color: var(--gray);
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--gradient-primary);
+            color: white;
+            padding: 16px 36px;
+            border-radius: 60px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: var(--transition);
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg), var(--glow);
+        }
+
+        .btn-demo {
+            background: linear-gradient(135deg, #10b981 0%, #06b6d4 100%);
+            animation: pulse-glow 2s infinite;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: var(--shadow), 0 0 20px rgba(16, 185, 129, 0.3); }
+            50% { box-shadow: var(--shadow), 0 0 40px rgba(16, 185, 129, 0.5); }
+        }
+
+        .btn-demo:hover {
+            animation: none;
+            box-shadow: var(--shadow-lg), 0 0 50px rgba(16, 185, 129, 0.4);
+        }
+
+        .btn-accent {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+        }
+
+        .btn-accent:hover {
+            background: linear-gradient(135deg, var(--primary-dark), #ec4899);
+        }
+
+        .btn-warning {
+            background: var(--warning);
+        }
+
+        .btn-warning:hover {
+            background: #e69500;
+        }
+
+        /* Header Styles */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(99, 102, 241, 0.1);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-weight: 700;
+            font-size: 1.8rem;
+            color: var(--primary);
+        }
+
+        .logo i {
+            margin-right: 10px;
+            color: var(--accent);
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            gap: 10px;
+        }
+
+        nav ul li {
+            margin-left: 20px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        nav ul li a:hover {
+            color: var(--primary);
+        }
+
+        nav ul li a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            left: 0;
+            bottom: -5px;
+            transition: var(--transition);
+        }
+
+        nav ul li a:hover:after {
+            width: 100%;
+        }
+
+        .mobile-menu {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .mobile-nav {
+            display: none;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding-top: 150px;
+            padding-bottom: 120px;
+            background: var(--gradient-hero);
+            overflow: hidden;
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%238b5cf6' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            pointer-events: none;
+        }
+
+        .hero .container {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1, .hero p, .hero .tagline {
+            color: white;
+        }
+
+        .hero p {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .hero-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .hero-content {
+            flex: 1;
+            padding-right: 30px;
+        }
+
+        .hero-image {
+            flex: 1;
+            text-align: center;
+        }
+
+        .hero-image img {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+
+        .tagline {
+            color: var(--primary);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .tagline i {
+            margin-right: 10px;
+        }
+
+        .highlight {
+            background: linear-gradient(135deg, #f472b6, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-buttons {
+            margin-top: 30px;
+        }
+
+        .hero-buttons .btn {
+            margin-right: 15px;
+            margin-bottom: 15px;
+        }
+
+        /* About Section */
+        .about {
+            background-color: white;
+        }
+
+        .about-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .about-image {
+            flex: 1;
+            text-align: center;
+        }
+
+        .about-image img {
+            max-width: 80%;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+
+        .about-content {
+            flex: 1;
+            padding-left: 50px;
+        }
+
+        .about-features {
+            margin-top: 30px;
+        }
+
+        .feature {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .feature i {
+            color: var(--success);
+            margin-right: 15px;
+            font-size: 1.2rem;
+            margin-top: 5px;
+        }
+
+        /* For You Section */
+        .for-you {
+            background: linear-gradient(180deg, #f8fafc 0%, #e0e7ff 100%);
+            position: relative;
+        }
+
+        .for-you::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%236366f1' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            pointer-events: none;
+        }
+
+        .for-you-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 35px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 1px solid rgba(99, 102, 241, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-primary);
+            transform: scaleX(0);
+            transition: var(--transition);
+        }
+
+        .card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .card:hover {
+            transform: translateY(-12px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .card-icon {
+            width: 70px;
+            height: 70px;
+            background: var(--gradient-primary);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.3);
+        }
+
+        .card-icon i {
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        /* Roadmap Section */
+        .roadmap-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .roadmap-timeline {
+            position: relative;
+            padding: 40px 0;
+        }
+
+        .roadmap-timeline:before {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background-color: var(--primary);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -2px;
+            border-radius: 2px;
+        }
+
+        .roadmap-item {
+            margin-bottom: 60px;
+            position: relative;
+            width: 45%;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+
+        .roadmap-item:nth-child(odd) {
+            left: 0;
+        }
+
+        .roadmap-item:nth-child(even) {
+            left: 55%;
+        }
+
+        .roadmap-number {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.3rem;
+            top: -20px;
+            box-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.4);
+        }
+
+        .roadmap-item:nth-child(odd) .roadmap-number {
+            right: -80px;
+        }
+
+        .roadmap-item:nth-child(even) .roadmap-number {
+            left: -80px;
+        }
+
+        /* Career & Freelancing Section */
+        .career {
+            background-color: #f0f9ff;
+        }
+
+        .career-intro {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 50px;
+        }
+
+        .career-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .career-path {
+            background: white;
+            border-radius: 20px;
+            padding: 45px 35px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: var(--transition);
+            border: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .career-path::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: var(--gradient-primary);
+        }
+
+        .career-path:hover {
+            transform: translateY(-12px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .career-path.jobs::before {
+            background: linear-gradient(135deg, var(--success), #34d399);
+        }
+
+        .career-path.freelance::before {
+            background: linear-gradient(135deg, var(--warning), #fbbf24);
+        }
+
+        .career-icon {
+            width: 90px;
+            height: 90px;
+            background: var(--gradient-primary);
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+            box-shadow: 0 15px 35px -10px rgba(99, 102, 241, 0.4);
+        }
+
+        .career-path.jobs .career-icon {
+            background: linear-gradient(135deg, var(--success), #34d399);
+        }
+
+        .career-path.freelance .career-icon {
+            background: linear-gradient(135deg, var(--warning), #fbbf24);
+        }
+
+        .career-icon i {
+            color: white;
+            font-size: 2rem;
+        }
+
+        .career-features {
+            text-align: left;
+            margin: 25px 0;
+        }
+
+        .career-feature {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .career-feature i {
+            color: var(--success);
+            margin-right: 10px;
+            font-size: 1rem;
+            margin-top: 5px;
+        }
+
+        .success-stories {
+            background: white;
+            border-radius: 10px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+            margin-top: 40px;
+        }
+
+        .story-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .story-card {
+            background: white;
+            border-radius: 16px;
+            padding: 28px;
+            border-left: 4px solid;
+            border-image: var(--gradient-primary) 1;
+            box-shadow: 0 10px 25px -10px rgba(99, 102, 241, 0.15);
+            transition: var(--transition);
+        }
+
+        .story-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px -10px rgba(99, 102, 241, 0.2);
+        }
+
+        .story-card h4 {
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+        }
+
+        .story-card h4 i {
+            margin-right: 10px;
+            color: var(--accent);
+        }
+
+        /* CTA Section */
+        .cta {
+            background: var(--gradient-hero);
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.2) 0%, transparent 50%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .cta .container {
+            position: relative;
+            z-index: 2;
+        }
+
+        .cta h2 {
+            color: white;
+        }
+
+        .cta h2:after {
+            background: white;
+        }
+
+        .cta p {
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+
+        .cta .btn {
+            background: white;
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .cta .btn:hover {
+            background: #f1f5f9;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--gradient-hero);
+            color: white;
+            padding: 80px 0 30px;
+            position: relative;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-primary);
+        }
+
+        .footer-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .footer-logo {
+            flex: 1;
+            min-width: 300px;
+            margin-bottom: 30px;
+        }
+
+        .footer-contact {
+            flex: 1;
+            min-width: 300px;
+            margin-bottom: 30px;
+        }
+
+        .footer-contact h3 {
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .contact-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .contact-info i {
+            color: var(--secondary);
+            margin-right: 15px;
+            font-size: 1.2rem;
+        }
+
+        .copyright {
+            text-align: center;
+            width: 100%;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            h1 {
+                font-size: 2.8rem;
+            }
+            
+            h2 {
+                font-size: 2.2rem;
+            }
+            
+            .hero-container,
+            .about-container {
+                flex-direction: column;
+            }
+            
+            .hero-content,
+            .about-content {
+                padding-right: 0;
+                padding-left: 0;
+                margin-bottom: 50px;
+                text-align: center;
+            }
+            
+            .roadmap-item {
+                width: 90%;
+                left: 5% !important;
+            }
+            
+            .roadmap-item:nth-child(odd) .roadmap-number,
+            .roadmap-item:nth-child(even) .roadmap-number {
+                left: -80px;
+                right: auto;
+            }
+            
+            .roadmap-timeline:before {
+                left: 30px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                display: none;
+            }
+            
+            .mobile-menu {
+                display: block;
+            }
+            
+            .mobile-nav {
+                position: fixed;
+                top: 80px;
+                left: 0;
+                width: 100%;
+                background: white;
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+                padding: 20px;
+                display: none;
+            }
+            
+            .mobile-nav.active {
+                display: block;
+            }
+            
+            .mobile-nav ul {
+                flex-direction: column;
+                list-style: none;
+                margin: 0;
+                padding: 0;
+            }
+            
+            .mobile-nav ul li {
+                margin: 0 0 15px 0;
+            }
+            
+            .mobile-nav ul li a {
+                text-decoration: none;
+                color: var(--dark);
+                font-weight: 500;
+                font-size: 1.1rem;
+            }
+            
+            .hero {
+                padding-top: 120px;
+            }
+            
+            h1 {
+                font-size: 2.3rem;
+            }
+            
+            h2 {
+                font-size: 1.8rem;
+            }
+            
+            .roadmap-timeline:before {
+                left: 20px;
+            }
+            
+            .roadmap-item {
+                width: calc(100% - 50px);
+                left: 50px !important;
+            }
+            
+            .roadmap-item .roadmap-number {
+                left: -70px !important;
+            }
+            
+            .success-stories {
+                padding: 25px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <i class="fas fa-robot"></i>
+                Python<span>&</span>AI
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#for-you">For You</a></li>
+                    <li><a href="#roadmap">Roadmap</a></li>
+                    <li><a href="#career">Career Support</a></li>
+                    <li><a href="#book-demo" style="color: var(--primary); font-weight: 600;">Book Demo</a></li>
+                </ul>
+            </nav>
+            <div class="mobile-menu" id="mobileMenu">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+        <div class="mobile-nav" id="mobileNav">
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#for-you">For You</a></li>
+                <li><a href="#roadmap">Roadmap</a></li>
+                <li><a href="#career">Career Support</a></li>
+                <li><a href="#book-demo" style="color: var(--primary); font-weight: 600;">Book Demo</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="particles">
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+        </div>
+        <div class="container hero-container">
+            <div class="hero-content">
+                <div class="tagline">
+                    <i class="fas fa-rocket"></i>
+                    Transform Your Career
+                </div>
+                <h1>Master <span class="highlight">Python & AI</span> From Absolute Scratch</h1>
+                <p>No coding background needed. Learn to build real AI systems, full-stack applications, and production-ready AI agents. <strong>Plus get job and freelancing support to start earning!</strong></p>
+                <div class="hero-buttons">
+                    <a href="#book-demo" class="btn btn-demo">
+                        <i class="fas fa-calendar-check"></i> Book Free Demo
+                    </a>
+                    <a href="#career" class="btn btn-accent">Career Support</a>
+                </div>
+                <p><small><i class="fas fa-exclamation-circle"></i> Limited mentorship slots available</small></p>
+            </div>
+            <div class="hero-image">
+                <!-- Using a placeholder image with a coding/AI theme -->
+                <div style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.2)); backdrop-filter: blur(10px); width: 100%; height: 420px; border-radius: 24px; display: flex; align-items: center; justify-content: center; color: white; border: 1px solid rgba(255,255,255,0.2); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);">
+                    <div style="text-align: center; padding: 20px;">
+                        <div style="width: 100px; height: 100px; background: linear-gradient(135deg, #8b5cf6, #f472b6); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 25px; box-shadow: 0 0 40px rgba(139, 92, 246, 0.4);">
+                            <i class="fas fa-laptop-code" style="font-size: 2.5rem;"></i>
+                        </div>
+                        <h3 style="color: white; font-size: 1.6rem; margin-bottom: 10px;">Python & AI Mentorship</h3>
+                        <p style="color: rgba(255,255,255,0.8); margin: 0;">Build Skills That Actually Earn</p>
+                        <div style="margin-top: 25px; display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                            <span style="background: rgba(255,255,255,0.1); padding: 8px 16px; border-radius: 20px; font-size: 0.85rem;"><i class="fas fa-check" style="color: #10b981; margin-right: 5px;"></i>1:1 Mentoring</span>
+                            <span style="background: rgba(255,255,255,0.1); padding: 8px 16px; border-radius: 20px; font-size: 0.85rem;"><i class="fas fa-check" style="color: #10b981; margin-right: 5px;"></i>Real Projects</span>
+                            <span style="background: rgba(255,255,255,0.1); padding: 8px 16px; border-radius: 20px; font-size: 0.85rem;"><i class="fas fa-check" style="color: #10b981; margin-right: 5px;"></i>Job Support</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <h2>Who's Behind This</h2>
+            <div class="about-container">
+                <div class="about-image">
+                    <img src="me.jpg" alt="Mentor" style="width: 300px; height: 300px; border-radius: 50%; object-fit: cover; margin: 0 auto; display: block;">
+                </div>
+                <div class="about-content">
+                    <h3>I don't teach theory-heavy nonsense or recycled tutorials.</h3>
+                    <p>This mentorship is built from real-world Python, automation, backend systems, and AI agent development.</p>
+                    <p>You'll learn how systems actually work, how to think like an engineer, and how to ship complete AI-powered products end to end. <strong>Plus, I'll help you turn these skills into income through jobs or freelancing.</strong></p>
+                    
+                    <div class="about-features">
+                        <div class="feature">
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <h4>Real-World Experience</h4>
+                                <p>Learn from someone who actually builds production AI systems.</p>
+                            </div>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <h4>Career Focused</h4>
+                                <p>Skills that translate directly to job opportunities and freelance projects.</p>
+                            </div>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <h4>Income Guidance</h4>
+                                <p>Learn how to monetize your skills through employment or freelancing.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- For You Section -->
+    <section class="for-you" id="for-you">
+        <div class="container">
+            <h2>This Is For You If</h2>
+            <div class="for-you-container">
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                    <h3>Zero Coding Experience</h3>
+                    <p>You're starting from absolute scratch with no prior programming knowledge. We'll build your foundation step-by-step.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-tired"></i>
+                    </div>
+                    <h3>Stuck in Tutorial Hell</h3>
+                    <p>You've been watching endless tutorials without building anything substantial. It's time to break the cycle.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3>Want Real AI Systems</h3>
+                    <p>You're not interested in toy demos. You want to build production-ready AI applications that solve real problems.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-money-bill-wave"></i>
+                    </div>
+                    <h3>Skills That Earn</h3>
+                    <p>You want to develop marketable skills that can actually generate income and advance your career.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Roadmap Section -->
+    <section class="roadmap" id="roadmap">
+        <div class="container">
+            <h2>The Learning Roadmap</h2>
+            <div class="roadmap-container">
+                <div class="roadmap-timeline">
+                    <!-- Step 1 -->
+                    <div class="roadmap-item">
+                        <div class="roadmap-number">01</div>
+                        <h3>Python Foundations</h3>
+                        <p>Programming logic, clean Python, automation mindset. Build a solid foundation before advancing to complex topics.</p>
+                    </div>
+                    
+                    <!-- Step 2 -->
+                    <div class="roadmap-item">
+                        <div class="roadmap-number">02</div>
+                        <h3>Advanced Python</h3>
+                        <p>OOP, async, APIs, performance, production patterns. Master the tools that professional Python developers use daily.</p>
+                    </div>
+                    
+                    <!-- Step 3 -->
+                    <div class="roadmap-item">
+                        <div class="roadmap-number">03</div>
+                        <h3>Networking & Web</h3>
+                        <p>HTTP, APIs, authentication, client-server systems. Understand how the internet works and how to leverage it.</p>
+                    </div>
+                    
+                    <!-- Step 4 -->
+                    <div class="roadmap-item">
+                        <div class="roadmap-number">04</div>
+                        <h3>Backend Engineering</h3>
+                        <p>Flask APIs, auth, logging, real backend architecture. Build robust server-side applications that scale.</p>
+                    </div>
+                    
+                    <!-- Step 5 -->
+                    <div class="roadmap-item">
+                        <div class="roadmap-number">05</div>
+                        <h3>Frontend Basics</h3>
+                        <p>HTML, CSS, integration with backend systems. Create interfaces that users can actually interact with.</p>
+                    </div>
+                    
+                    <!-- Step 6 -->
+                    <div class="roadmap-item">
+                        <div class="roadmap-number">06</div>
+                        <h3>AI & LLM Fundamentals</h3>
+                        <p>LLMs, prompts, tokens, costs, limitations. Understand the core concepts behind modern AI without the hype.</p>
+                    </div>
+                    
+                    <!-- Step 7 -->
+                    <div class="roadmap-item">
+                        <div class="roadmap-number">07</div>
+                        <h3>AI Agents in Python</h3>
+                        <p>Chatbots, tool-calling agents, automation agents. Build intelligent systems that can perform tasks autonomously.</p>
+                    </div>
+                    
+                    <!-- Step 8 -->
+                    <div class="roadmap-item">
+                        <div class="roadmap-number">08</div>
+                        <h3>RAG Systems</h3>
+                        <p>Embeddings, vector DBs, retrieval pipelines. Create AI systems that can access and use your specific knowledge base.</p>
+                    </div>
+                    
+                    <!-- Step 9 -->
+                    <div class="roadmap-item">
+                        <div class="roadmap-number">09</div>
+                        <h3>LLM Fine-Tuning</h3>
+                        <p>When to fine-tune, datasets, LoRA, cost reality. Customize AI models for your specific use cases.</p>
+                    </div>
+                    
+                    <!-- Step 10 -->
+                    <div class="roadmap-item">
+                        <div class="roadmap-number">10</div>
+                        <h3>Full AI Products</h3>
+                        <p>Resume AI, search agents, full-stack AI applications, deployment mindset. Ship complete products from start to finish.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Career & Freelancing Section -->
+    <section class="career" id="career">
+        <div class="container">
+            <h2>From Learning to Earning</h2>
+            <div class="career-intro">
+                <p>The journey doesn't end with learning. I'll help you turn your new skills into real income through job placement or freelancing. This is what makes our mentorship truly different.</p>
+            </div>
+            
+            <div class="career-container">
+                <!-- Job Support -->
+                <div class="career-path jobs">
+                    <div class="career-icon">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <h3>Job Placement Support</h3>
+                    <p>Get ready for the job market with personalized guidance and industry connections.</p>
+                    
+                    <div class="career-features">
+                        <div class="career-feature">
+                            <i class="fas fa-check"></i>
+                            <div>
+                                <strong>Resume & Portfolio Review</strong>
+                                <p>Optimize your resume and build a portfolio that stands out to employers.</p>
+                            </div>
+                        </div>
+                        <div class="career-feature">
+                            <i class="fas fa-check"></i>
+                            <div>
+                                <strong>Technical Interview Prep</strong>
+                                <p>Practice solving real interview problems with personalized feedback.</p>
+                            </div>
+                        </div>
+                        <div class="career-feature">
+                            <i class="fas fa-check"></i>
+                            <div>
+                                <strong>Job Search Strategy</strong>
+                                <p>Learn where to find the best opportunities and how to approach companies.</p>
+                            </div>
+                        </div>
+                        <div class="career-feature">
+                            <i class="fas fa-check"></i>
+                            <div>
+                                <strong>Industry Connections</strong>
+                                <p>Access to our network of hiring managers and tech companies.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <a href="#book-demo" class="btn btn-demo" style="margin-top: 15px;">
+                        <i class="fas fa-calendar-check"></i> Book Free Demo
+                    </a>
+                </div>
+                
+                <!-- Freelance Support -->
+                <div class="career-path freelance">
+                    <div class="career-icon">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <h3>Freelancing Guidance</h3>
+                    <p>Build a successful freelance career with AI and Python skills that are in high demand.</p>
+                    
+                    <div class="career-features">
+                        <div class="career-feature">
+                            <i class="fas fa-check"></i>
+                            <div>
+                                <strong>Finding Clients</strong>
+                                <p>Learn proven strategies to find and secure high-paying freelance clients.</p>
+                            </div>
+                        </div>
+                        <div class="career-feature">
+                            <i class="fas fa-check"></i>
+                            <div>
+                                <strong>Pricing & Negotiation</strong>
+                                <p>How to price your services competitively and negotiate better rates.</p>
+                            </div>
+                        </div>
+                        <div class="career-feature">
+                            <i class="fas fa-check"></i>
+                            <div>
+                                <strong>Project Management</strong>
+                                <p>Manage client expectations, timelines, and deliverables effectively.</p>
+                            </div>
+                        </div>
+                        <div class="career-feature">
+                            <i class="fas fa-check"></i>
+                            <div>
+                                <strong>Building a Reputation</strong>
+                                <p>Create testimonials, case studies, and a strong personal brand.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <a href="#book-demo" class="btn btn-accent" style="margin-top: 15px;">
+                        <i class="fas fa-rocket"></i> Start Freelancing
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Success Stories -->
+            <div class="success-stories">
+                <h3 style="text-align: center; color: var(--primary);">Success Stories</h3>
+                <p style="text-align: center; max-width: 800px; margin: 0 auto 30px;">Our students have successfully transitioned into Python & AI careers</p>
+                
+                <div class="story-grid">
+                    <div class="story-card">
+                        <h4><i class="fas fa-chart-line"></i> Career Changer</h4>
+                        <p>"With zero coding background, I went from a marketing role to a Python developer position in 6 months. The job search support was invaluable."</p>
+                        <p><strong>- Sarah, Junior Python Developer</strong></p>
+                    </div>
+                    
+                    <div class="story-card">
+                        <h4><i class="fas fa-code"></i> Freelance Success</h4>
+                        <p>"I started freelancing while learning. Now I make $5k+/month building AI chatbots for small businesses. The client acquisition strategies really work."</p>
+                        <p><strong>- Alex, AI Freelancer</strong></p>
+                    </div>
+                    
+                    <div class="story-card">
+                        <h4><i class="fas fa-rocket"></i> Fast Promotion</h4>
+                        <p>"After adding AI skills to my existing Python knowledge, I got promoted to lead a new AI initiative at my company with a 40% salary increase."</p>
+                        <p><strong>- Michael, AI Team Lead</strong></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Book Demo Section (Calendly) -->
+    <section class="book-demo" id="book-demo" style="background: linear-gradient(135deg, #f8fafc 0%, #e0e7ff 100%); padding: 100px 0; position: relative; overflow: hidden;">
+        <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%236366f1' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\"); pointer-events: none;"></div>
+        <div class="container" style="position: relative; z-index: 2;">
+            <div style="text-align: center; margin-bottom: 50px;">
+                <h2 style="position: relative; display: inline-block;">Book Your Free Demo</h2>
+                <p style="max-width: 600px; margin: 20px auto 0; font-size: 1.1rem;">Schedule a 30-minute personalized consultation to discuss your learning goals and see if this mentorship is right for you.</p>
+            </div>
+            
+            <div style="max-width: 900px; margin: 0 auto;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; margin-bottom: 40px;">
+                    <div style="background: white; padding: 25px; border-radius: 16px; box-shadow: 0 10px 40px -10px rgba(99, 102, 241, 0.15); text-align: center;">
+                        <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #10b981, #06b6d4); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px;">
+                            <i class="fas fa-comments" style="color: white; font-size: 1.5rem;"></i>
+                        </div>
+                        <h4 style="margin-bottom: 8px; color: #0f172a;">Personalized Call</h4>
+                        <p style="margin: 0; font-size: 0.95rem;">Discuss your goals and current skill level</p>
+                    </div>
+                    <div style="background: white; padding: 25px; border-radius: 16px; box-shadow: 0 10px 40px -10px rgba(99, 102, 241, 0.15); text-align: center;">
+                        <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #8b5cf6, #f472b6); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px;">
+                            <i class="fas fa-road" style="color: white; font-size: 1.5rem;"></i>
+                        </div>
+                        <h4 style="margin-bottom: 8px; color: #0f172a;">Custom Roadmap</h4>
+                        <p style="margin: 0; font-size: 0.95rem;">Get a learning path tailored to you</p>
+                    </div>
+                    <div style="background: white; padding: 25px; border-radius: 16px; box-shadow: 0 10px 40px -10px rgba(99, 102, 241, 0.15); text-align: center;">
+                        <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #f59e0b, #ef4444); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px;">
+                            <i class="fas fa-question-circle" style="color: white; font-size: 1.5rem;"></i>
+                        </div>
+                        <h4 style="margin-bottom: 8px; color: #0f172a;">Ask Anything</h4>
+                        <p style="margin: 0; font-size: 0.95rem;">No pressure, no commitment required</p>
+                    </div>
+                </div>
+                
+                <!-- Calendly Embed -->
+                <div style="background: white; border-radius: 20px; padding: 20px; box-shadow: 0 25px 50px -12px rgba(99, 102, 241, 0.2); overflow: hidden;">
+                    <div class="calendly-inline-widget" data-url="https://calendly.com/YOUR_CALENDLY_USERNAME" style="min-width: 320px; height: 700px;"></div>
+                    <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+                </div>
+                
+                <p style="text-align: center; margin-top: 30px; color: #64748b;"><i class="fas fa-lock" style="margin-right: 8px;"></i>100% free • No credit card required • No obligations</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta" id="cta">
+        <div class="container">
+            <h2>Build Skills That Actually Matter & Earn</h2>
+            <p>This is mentorship, not a recorded course dump. You build. You understand. You ship. And most importantly, you learn how to turn these skills into income. Limited slots available for personalized guidance.</p>
+            <a href="#book-demo" class="btn" style="background: white; color: var(--primary);">
+                <i class="fas fa-calendar-check"></i> Book Your Free Demo
+            </a>
+            <p style="margin-top: 20px; font-size: 0.9rem;">🎯 30-minute personalized consultation</p>
+            <p style="margin-top: 10px; font-size: 0.9rem; font-weight: 600;">Includes job placement and freelancing support!</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-logo">
+                    <div class="logo" style="color: white; font-size: 2rem;">
+                        <i class="fas fa-robot"></i>
+                        Python<span style="color: var(--secondary);">&</span>AI
+                    </div>
+                    <p style="color: rgba(255, 255, 255, 0.8); margin-top: 20px; max-width: 300px;">Master Python & AI from scratch. Build real systems, not just toy projects. Get job and freelancing support.</p>
+                </div>
+                <div class="footer-contact">
+                    <h3>Contact & Support</h3>
+                    <div class="contact-info">
+                        <i class="fas fa-calendar-check"></i>
+                        <div>
+                            <p style="font-weight: 600;">Book a Demo</p>
+                            <p><a href="#book-demo" style="color: var(--secondary);">Schedule Free Consultation</a></p>
+                        </div>
+                    </div>
+                    <div class="contact-info">
+                        <i class="fas fa-briefcase"></i>
+                        <div>
+                            <p style="font-weight: 600;">Career Support</p>
+                            <p>Job placement & freelancing guidance included</p>
+                        </div>
+                    </div>
+                    <div class="contact-info">
+                        <i class="fas fa-graduation-cap"></i>
+                        <div>
+                            <p style="font-weight: 600;">Real-World Focus</p>
+                            <p>Production-ready AI systems that earn</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>© 2025 Python & AI Engineering Mentorship. All rights reserved. | Job & Freelancing Support Included</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobileMenu').addEventListener('click', function() {
+            document.getElementById('mobileNav').classList.toggle('active');
+            this.querySelector('i').classList.toggle('fa-bars');
+            this.querySelector('i').classList.toggle('fa-times');
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                // Close mobile menu if open
+                document.getElementById('mobileNav').classList.remove('active');
+                document.getElementById('mobileMenu').querySelector('i').classList.remove('fa-times');
+                document.getElementById('mobileMenu').querySelector('i').classList.add('fa-bars');
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Demo booking button tracking
+        document.querySelectorAll('.btn-demo, .cta .btn, .btn-accent').forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Track demo booking clicks
+                console.log('Demo booking button clicked - user interested in mentorship');
+            });
+        });
+
+        // Add a simple animation to career cards on scroll
+        const observerOptions = {
+            threshold: 0.2,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe career cards for animation
+        document.querySelectorAll('.career-path').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>
